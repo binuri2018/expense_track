@@ -99,21 +99,32 @@ router.put('/:id', [
 // @access  Private
 router.delete('/:id', auth, async (req, res) => {
   try {
+    console.log('Attempting to delete expense:', req.params.id, 'for user:', req.user.id);
+    
     const expense = await Expense.findById(req.params.id);
     if (!expense) {
+      console.log('Expense not found:', req.params.id);
       return res.status(404).json({ msg: 'Expense not found' });
     }
 
     // Make sure user owns the expense
     if (expense.userId.toString() !== req.user.id) {
+      console.log('User not authorized to delete expense:', req.user.id, 'trying to delete:', expense.userId);
       return res.status(401).json({ msg: 'Not authorized' });
     }
 
-    await expense.remove();
+    const result = await Expense.findByIdAndDelete(req.params.id);
+    if (!result) {
+      console.log('Failed to delete expense:', req.params.id);
+      return res.status(500).json({ msg: 'Failed to delete expense' });
+    }
+    
+    console.log('Successfully deleted expense:', req.params.id);
     res.json({ msg: 'Expense removed' });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
+    console.error('Error deleting expense:', err.message);
+    console.error('Full error:', err);
+    res.status(500).json({ msg: 'Server error', error: err.message });
   }
 });
 

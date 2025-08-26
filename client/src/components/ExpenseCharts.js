@@ -1,18 +1,14 @@
 import React from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { getCategoryColor } from '../utils/colors';
 import './ExpenseCharts.css';
 
 const ExpenseCharts = ({ summary }) => {
-  const COLORS = [
-    '#0088FE', '#00C49F', '#FFBB28', '#FF8042', 
-    '#8884D8', '#82CA9D', '#FFC658', '#FF6B6B', '#4ECDC4'
-  ];
 
   // Prepare data for pie chart
   const pieData = Object.entries(summary.categoryBreakdown).map(([category, amount], index) => ({
     name: category,
-    value: amount,
-    color: COLORS[index % COLORS.length]
+    value: amount
   }));
 
   // Prepare data for bar chart
@@ -35,20 +31,20 @@ const ExpenseCharts = ({ summary }) => {
   if (Object.keys(summary.categoryBreakdown).length === 0) {
     return (
       <div className="expense-charts-container">
-        <h3>Expense Analytics</h3>
-        <div className="no-data">
-          <p>Add some expenses to see beautiful charts!</p>
-        </div>
+              <h3>Expense Charts</h3>
+      <div className="no-data">
+        <p>Add some expenses to see beautiful charts!</p>
+      </div>
       </div>
     );
   }
 
   return (
     <div className="expense-charts-container">
-      <h3>Expense Analytics</h3>
+      <h3>Expense Charts</h3>
       
       <div className="chart-section">
-        <h4>Category Breakdown (Pie Chart)</h4>
+        <h4>Spending by Category (Pie Chart)</h4>
         <div className="chart-container">
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
@@ -59,11 +55,11 @@ const ExpenseCharts = ({ summary }) => {
                 labelLine={false}
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 outerRadius={80}
-                fill="#8884d8"
+                fill="#ff6b6b"
                 dataKey="value"
               >
                 {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                  <Cell key={`cell-${index}`} fill={getCategoryColor(entry.name)} />
                 ))}
               </Pie>
               <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
@@ -82,33 +78,28 @@ const ExpenseCharts = ({ summary }) => {
               <YAxis />
               <Tooltip content={<CustomTooltip />} />
               <Legend />
-              <Bar dataKey="amount" fill="#8884d8" />
+              <Bar dataKey="amount">
+                {barData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={getCategoryColor(entry.category)} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
-
-      <div className="chart-section">
-        <h4>Quick Stats</h4>
-        <div className="stats-grid">
-          <div className="stat-item">
-            <span className="stat-label">Total Spent</span>
-            <span className="stat-value">${summary.totalAmount.toFixed(2)}</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-label">Total Expenses</span>
-            <span className="stat-value">{summary.totalExpenses}</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-label">Categories</span>
-            <span className="stat-value">{Object.keys(summary.categoryBreakdown).length}</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-label">Average</span>
-            <span className="stat-value">
-              ${summary.totalExpenses > 0 ? (summary.totalAmount / summary.totalExpenses).toFixed(2) : '0.00'}
-            </span>
-          </div>
+      
+      <div className="chart-legend">
+        <h4>Category Colors Legend</h4>
+        <div className="legend-items">
+          {Object.entries(summary.categoryBreakdown).map(([category, amount]) => (
+            <div key={category} className="legend-item">
+              <div 
+                className="legend-color" 
+                style={{ backgroundColor: getCategoryColor(category) }}
+              ></div>
+              <span className="legend-label">{category}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

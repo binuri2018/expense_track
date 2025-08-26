@@ -104,7 +104,7 @@ const ExpenseForm = ({ onSubmit, editingExpense, onUpdate, onCancel }) => {
 
   return (
     <div className="expense-form-container">
-      <h3>{editingExpense ? 'Edit Expense' : 'Add New Expense'}</h3>
+      <h3>Add New Expense</h3>
       
       <form onSubmit={handleSubmit} className="expense-form">
         <div className="form-group">

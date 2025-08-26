@@ -47,7 +47,7 @@ const ExpenseTable = ({ expenses, onEdit, onDelete }) => {
               <tr key={expense._id}>
                 <td className="expense-title">{expense.title}</td>
                 <td>
-                  <span className={`category-badge category-${expense.category.toLowerCase().replace(/\s+/g, '-')}`}>
+                  <span className="category-badge">
                     {expense.category}
                   </span>
                 </td>
