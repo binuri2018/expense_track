@@ -1,0 +1,180 @@
+.expense-table-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.expense-table-container h3 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.no-expenses {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-expenses p {
+  font-size: 16px;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+}
+
+.expense-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  min-width: 600px;
+}
+
+.expense-table th {
+  background-color: #f8f9fa;
+  padding: 15px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 2px solid #e1e8ed;
+  font-size: 14px;
+}
+
+.expense-table td {
+  padding: 15px 12px;
+  border-bottom: 1px solid #e1e8ed;
+  vertical-align: middle;
+}
+
+.expense-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.expense-title {
+  font-weight: 500;
+  color: #333;
+  max-width: 200px;
+  word-wrap: break-word;
+}
+
+.expense-amount {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 16px;
+}
+
+.expense-date {
+  color: #666;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.expense-actions {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  text-align: center;
+  min-width: 80px;
+}
+
+/* Category Colors */
+.category-food-&-dining {
+  background-color: #e74c3c;
+}
+
+.category-transportation {
+  background-color: #3498db;
+}
+
+.category-shopping {
+  background-color: #9b59b6;
+}
+
+.category-entertainment {
+  background-color: #f39c12;
+}
+
+.category-bills-&-utilities {
+  background-color: #1abc9c;
+}
+
+.category-healthcare {
+  background-color: #e67e22;
+}
+
+.category-education {
+  background-color: #34495e;
+}
+
+.category-travel {
+  background-color: #16a085;
+}
+
+.category-other {
+  background-color: #95a5a6;
+}
+
+.table-summary {
+  margin-top: 20px;
+  text-align: right;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e1e8ed;
+}
+
+.table-summary p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.table-summary strong {
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .expense-table-container {
+    padding: 20px;
+  }
+  
+  .expense-table-container h3 {
+    font-size: 1.3rem;
+  }
+  
+  .expense-table th,
+  .expense-table td {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+  
+  .expense-title {
+    max-width: 150px;
+  }
+  
+  .category-badge {
+    font-size: 11px;
+    padding: 3px 6px;
+    min-width: 70px;
+  }
+  
+  .table-summary {
+    text-align: center;
+  }
+}
