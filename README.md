@@ -43,24 +43,17 @@ A full-stack MERN application for tracking personal expenses with beautiful char
    cd expense-tracker-dashboard
    ```
 
-2. **Install backend dependencies**
+2. **Install all dependencies**
    ```bash
-   npm install
+   npm run install-all
    ```
 
-3. **Install frontend dependencies**
-   ```bash
-   cd client
-   npm install
-   cd ..
-   ```
-
-4. **Environment Setup**
-   - Copy `config.env` to `.env`
+3. **Environment Setup**
+   - Copy `server/config.env` to `server/.env`
    - Update MongoDB connection string
    - Set your JWT secret
 
-5. **Start the application**
+4. **Start the application**
    ```bash
    # Development mode (runs both frontend and backend)
    npm run dev

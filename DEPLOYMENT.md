@@ -1,15 +1,31 @@
-# 🚀 Netlify Deployment Guide
+# 🚀 Deployment Guide - New Structure
 
-## Prerequisites
-- Your code must be pushed to a GitHub repository
-- You need a Netlify account (free at https://netlify.com)
+## 📁 New Project Structure
 
-## Frontend Deployment (Netlify)
+```
+expense-tracker/
+├── client/                 # React frontend
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   └── netlify.toml
+├── server/                 # Node.js backend
+│   ├── server.js
+│   ├── package.json
+│   ├── config.env
+│   ├── models/
+│   ├── routes/
+│   └── middleware/
+├── package.json            # Root package.json
+└── README.md
+```
+
+## 🚀 Frontend Deployment (Netlify)
 
 ### Step 1: Push to GitHub
 ```bash
 git add .
-git commit -m "Ready for Netlify deployment"
+git commit -m "Restructured project with separate client/server folders"
 git push origin main
 ```
 
@@ -19,9 +35,10 @@ git push origin main
 3. Choose **GitHub** and authorize Netlify
 4. Select your repository
 5. Configure build settings:
+   - **Base directory**: `client`
    - **Build command**: `npm run build`
    - **Publish directory**: `build`
-   - **Node version**: `18` (or higher)
+   - **Node version**: `18`
 6. Click **"Deploy site"**
 
 ### Step 3: Environment Variables
@@ -30,56 +47,137 @@ After deployment, go to **Site settings > Environment variables** and add:
 REACT_APP_API_URL=https://your-backend-url.com
 ```
 
-## Backend Deployment Options
-
-Since Netlify only hosts static sites, you'll need to deploy your backend separately:
+## 🖥️ Backend Deployment
 
 ### Option 1: Render (Recommended - Free)
+
 1. Go to [render.com](https://render.com)
-2. Create a new Web Service
-3. Connect your GitHub repo
-4. Set build command: `npm install`
-5. Set start command: `npm start`
-6. Add environment variables from your `config.env`
+2. Click **"New +"** → **"Web Service"**
+3. Connect your GitHub repository
+4. Configure the service:
+   - **Name**: `expense-tracker-backend`
+   - **Root Directory**: `server`
+   - **Build Command**: `npm install`
+   - **Start Command**: `npm start`
+   - **Node Version**: `18`
+5. Add environment variables:
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `JWT_SECRET`: Your JWT secret key
+   - `PORT`: `10000` (Render's default)
+6. Click **"Create Web Service"**
 
 ### Option 2: Railway
+
 1. Go to [railway.app](https://railway.app)
-2. Connect your GitHub repo
-3. Deploy automatically
-4. Add environment variables
+2. Click **"New Project"** → **"Deploy from GitHub repo"**
+3. Select your repository
+4. Set **Root Directory** to `server`
+5. Add environment variables from `server/config.env`
+6. Deploy automatically
 
 ### Option 3: Heroku
+
 1. Go to [heroku.com](https://heroku.com)
 2. Create new app
-3. Connect GitHub repo
-4. Deploy
+3. Connect GitHub repository
+4. Set **Root Directory** to `server`
+5. Add environment variables
+6. Deploy
 
-## Important Notes
+## 🔧 Local Development
 
-⚠️ **Backend URL**: After deploying the backend, update the frontend environment variable `REACT_APP_API_URL` with your backend URL.
+### Install Dependencies
+```bash
+# Install all dependencies (both client and server)
+npm run install-all
 
-🔒 **Environment Variables**: Never commit sensitive data like API keys or database URIs to GitHub.
+# Or install separately:
+npm run install-server
+npm run install-client
+```
 
-📱 **CORS**: Ensure your backend allows requests from your Netlify domain.
+### Start Development
+```bash
+# Start both frontend and backend
+npm run dev
 
-## Testing Deployment
+# Or start separately:
+npm run server    # Backend only
+npm run client    # Frontend only
+```
 
-1. Test your frontend at your Netlify URL
-2. Test API endpoints from your backend URL
-3. Verify authentication and CRUD operations work
-4. Check that charts and data visualization work correctly
+## 🌐 Production URLs
 
-## Troubleshooting
+After deployment, you'll have:
+- **Frontend**: `https://your-app.netlify.app`
+- **Backend**: `https://your-backend.onrender.com` (or similar)
 
-- **Build fails**: Check Node.js version and dependencies
-- **API errors**: Verify backend URL and CORS settings
-- **Authentication issues**: Check JWT secret and token handling
-- **Database errors**: Verify MongoDB connection string
+## 🔗 Connect Frontend to Backend
 
-## Support
+1. Update the frontend environment variable in Netlify:
+   - Go to **Site settings > Environment variables**
+   - Add: `REACT_APP_API_URL=https://your-backend-url.com`
 
-If you encounter issues, check:
-- Netlify build logs
-- Browser console for frontend errors
-- Backend server logs
-- Network tab for API request/response details
+2. Update CORS in your backend (`server/server.js`):
+```javascript
+app.use(cors({
+  origin: ['https://your-app.netlify.app', 'http://localhost:3000'],
+  credentials: true
+}));
+```
+
+## 📋 Deployment Checklist
+
+### Frontend (Netlify)
+- [ ] Code pushed to GitHub
+- [ ] Netlify connected to repository
+- [ ] Build settings configured correctly
+- [ ] Environment variables set
+- [ ] Site deployed successfully
+
+### Backend (Render/Railway/Heroku)
+- [ ] Code pushed to GitHub
+- [ ] Service created with correct root directory
+- [ ] Environment variables added
+- [ ] Service deployed successfully
+- [ ] API endpoints tested
+
+### Integration
+- [ ] Frontend environment variable updated with backend URL
+- [ ] CORS configured for frontend domain
+- [ ] Authentication working
+- [ ] CRUD operations working
+- [ ] Charts and data visualization working
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+1. **Build fails on Netlify**
+   - Check Node.js version
+   - Verify build command and publish directory
+   - Check for missing dependencies
+
+2. **Backend deployment fails**
+   - Verify root directory is set to `server`
+   - Check environment variables
+   - Ensure `package.json` is in the server folder
+
+3. **API connection errors**
+   - Verify backend URL in frontend environment variables
+   - Check CORS configuration
+   - Test API endpoints directly
+
+4. **Authentication issues**
+   - Verify JWT_SECRET is set correctly
+   - Check token handling in frontend
+   - Ensure secure cookie settings
+
+## 📞 Support
+
+If you encounter issues:
+1. Check deployment logs
+2. Verify environment variables
+3. Test API endpoints with Postman
+4. Check browser console for frontend errors
+5. Review server logs for backend errors
