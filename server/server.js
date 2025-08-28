@@ -10,7 +10,14 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000', // Development
+    'https://your-netlify-app.netlify.app', // Replace with your actual Netlify URL
+    'https://expense-track-server1.onrender.com' // Your backend URL (for testing)
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Connect to MongoDB

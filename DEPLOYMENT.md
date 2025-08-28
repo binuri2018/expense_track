@@ -44,7 +44,7 @@ git push origin main
 ### Step 3: Environment Variables
 After deployment, go to **Site settings > Environment variables** and add:
 ```
-REACT_APP_API_URL=https://your-backend-url.com
+REACT_APP_API_URL=https://expense-track-server1.onrender.com
 ```
 
 ## 🖥️ Backend Deployment
@@ -110,13 +110,13 @@ npm run client    # Frontend only
 
 After deployment, you'll have:
 - **Frontend**: `https://your-app.netlify.app`
-- **Backend**: `https://your-backend.onrender.com` (or similar)
+- **Backend**: `https://expense-track-server1.onrender.com`
 
 ## 🔗 Connect Frontend to Backend
 
 1. Update the frontend environment variable in Netlify:
    - Go to **Site settings > Environment variables**
-   - Add: `REACT_APP_API_URL=https://your-backend-url.com`
+   - Add: `REACT_APP_API_URL=https://expense-track-server1.onrender.com`
 
 2. Update CORS in your backend (`server/server.js`):
 ```javascript
