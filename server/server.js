@@ -10,13 +10,13 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: [
-    'http://localhost:3000', // Development
-    'https://expense-track-client.onrender.com' // Replace with Render frontend URL
-  ],
-  credentials: true
-}));
+// app.use(cors({
+//   origin: [
+//     'http://localhost:3000', // Development
+//     'https://expense-track-client.onrender.com' // Replace with Render frontend URL
+//   ],
+//   credentials: true
+// }));
 app.use(express.json());
 
 // Connect to MongoDB
