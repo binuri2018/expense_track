@@ -31,16 +31,16 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/expenses', require('./routes/expenses'));
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Serve frontend build from client folder (parallel to server)
-  const clientBuildPath = path.join(__dirname, '../client/build');
-  app.use(express.static(clientBuildPath));
+// // Serve static assets if in production
+// if (process.env.NODE_ENV === 'production') {
+//   // Serve frontend build from client folder (parallel to server)
+//   const clientBuildPath = path.join(__dirname, '../client/build');
+//   app.use(express.static(clientBuildPath));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  });
-}
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(clientBuildPath, 'index.html'));
+//   });
+// }
 
 const PORT = process.env.PORT || 5000;
 
