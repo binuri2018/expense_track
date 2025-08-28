@@ -13,7 +13,7 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000', // Development
-    'https://expense-track-client.onrender.com/' // Replace with Render frontend URL
+    'https://expense-track-client.onrender.com' // Replace with Render frontend URL
   ],
   credentials: true
 }));
