@@ -13,7 +13,6 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000', // Development
-    'https://your-netlify-app.netlify.app', // Netlify (replace with actual)
     'https://expense-track-client.onrender.com' // Render static frontend
   ],
   credentials: true

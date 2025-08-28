@@ -8,7 +8,6 @@ expense-tracker/
 │   ├── public/
 │   ├── src/
 │   ├── package.json
-│   └── netlify.toml
 ├── server/                 # Node.js backend
 │   ├── server.js
 │   ├── package.json
@@ -20,7 +19,7 @@ expense-tracker/
 └── README.md
 ```
 
-## 🚀 Frontend Deployment (Netlify)
+## 🚀 Frontend Deployment (Render Static Site)
 
 ### Step 1: Push to GitHub
 ```bash
@@ -29,20 +28,17 @@ git commit -m "Restructured project with separate client/server folders"
 git push origin main
 ```
 
-### Step 2: Deploy to Netlify
-1. Go to [https://app.netlify.com/](https://app.netlify.com/)
-2. Click **"New site from Git"**
-3. Choose **GitHub** and authorize Netlify
-4. Select your repository
-5. Configure build settings:
-   - **Base directory**: `client`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `build`
-   - **Node version**: `18`
-6. Click **"Deploy site"**
+### Step 2: Deploy to Render Static Site
+1. Go to [https://render.com](https://render.com)
+2. Click **"New +"** → **"Static Site"**
+3. Connect your GitHub repository
+4. Set **Root Directory** to `client`
+5. Set **Build Command** to `npm install && npm run build`
+6. Set **Publish Directory** to `build`
+7. Click **Create Static Site**
 
 ### Step 3: Environment Variables
-After deployment, go to **Site settings > Environment variables** and add:
+In the Static Site **Environment** section, add:
 ```
 REACT_APP_API_URL=https://expense-track-server1.onrender.com
 ```
@@ -109,29 +105,31 @@ npm run client    # Frontend only
 ## 🌐 Production URLs
 
 After deployment, you'll have:
-- **Frontend**: `https://your-app.netlify.app`
+- **Frontend**: your Render Static Site URL (e.g., `https://expense-track-client.onrender.com`)
 - **Backend**: `https://expense-track-server1.onrender.com`
 
 ## 🔗 Connect Frontend to Backend
 
-1. Update the frontend environment variable in Netlify:
-   - Go to **Site settings > Environment variables**
+1. Update the frontend environment variable in Render (Static Site):
+   - Go to **Static Site → Environment**
    - Add: `REACT_APP_API_URL=https://expense-track-server1.onrender.com`
 
 2. Update CORS in your backend (`server/server.js`):
 ```javascript
 app.use(cors({
-  origin: ['https://your-app.netlify.app', 'http://localhost:3000'],
+  origin: ['https://expense-track-client.onrender.com', 'http://localhost:3000'],
   credentials: true
 }));
 ```
 
 ## 📋 Deployment Checklist
 
-### Frontend (Netlify)
+### Frontend (Render Static Site)
 - [ ] Code pushed to GitHub
-- [ ] Netlify connected to repository
-- [ ] Build settings configured correctly
+- [ ] Render Static Site created
+- [ ] Root Directory = `client`
+- [ ] Build Command set
+- [ ] Publish Directory set
 - [ ] Environment variables set
 - [ ] Site deployed successfully
 
